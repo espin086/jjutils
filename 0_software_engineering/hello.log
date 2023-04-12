@@ -1,0 +1,17 @@
+2018-05-14 17:13:04,179 - __main__ - INFO - Hello baby
+2018-05-14 17:13:20,915 - __main__ - INFO - Hello baby
+2018-05-14 17:17:11,378 - __main__ - INFO - Hello baby
+2018-05-14 17:17:39,280 - __main__ - INFO - Hello baby
+2018-05-14 17:25:48,530 - __main__ - INFO - Handling requests myrequest
+2018-05-14 17:26:04,892 - __main__ - INFO - Handling requests myrequest
+2018-05-14 17:26:04,892 - __main__ - INFO - Return result result
+2018-05-14 17:26:42,720 - __main__ - INFO - Handling requests myrequest
+2018-05-14 17:26:42,720 - __main__ - INFO - Return result result
+2018-05-14 17:27:20,409 - __main__ - INFO - Starting service at port 4081
+2018-05-14 17:27:20,409 - __main__ - INFO - Service is started
+2018-05-14 17:32:00,001 - __main__ - WARNING - Login attem to jj from IP 1234567
+2018-05-14 17:40:47,559 - __main__ - ERROR - Failed to open file
+Traceback (most recent call last):
+  File "/Users/jje/Documents/2_personal/my-toolbox/0_software_engineering/example_logging.py", line 74, in <module>
+    open('/path/to/does/not/exist', 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: '/path/to/does/not/exist'

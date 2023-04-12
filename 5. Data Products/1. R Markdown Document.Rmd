@@ -1,0 +1,166 @@
+---
+title: "Exploratory Analysis - Kitchen Stoves"
+author: "JJ Espinoza"
+date: "Sunday, August 23, 2015"
+output: word_document
+---
+
+The following exploratory analysis examines data on product characteristics of kitchen stoves. 
+
+
+**Stove Requirements**
+
+Stainless steel
+
+
+Dimensions of the stove: Depth = 25in, Width = 30in, Height 45in
+
+**Key Findings (statistically significant):**
+
+- The average price of a stainless steel stove with gas burners is $1,500
+
+- The dimensions of the stove we need is common
+
+- There is a strong correlation between price and weight; likely due to better materials
+
+- The capacity of the stove is also a key driver, specifically the capacity of the oven
+
+- The effectiveness of the stove is important but mainly driven by the heating capacity of the oven
+
+
+##Importing the data.
+
+```{r echo=TRUE}
+data <- read.csv("C:/Users/ESPIJ090.WDW/Home - Kitchen Stoves/data/Kitchen Stove.csv")
+```
+
+
+
+###We want to limit our search to stainless steel stoves only.
+
+```{r echo=TRUE}
+stainless <- data[which(data$Color=="Stainless steel" & data$CookingSurface=="Gas: sealed burners"),]
+```
+
+##Data Visualization and Analysis
+
+###What should we expect to pay for a stove?
+
+```{r echo=TRUE}
+hist(stainless$Price, col = "red", main="Stainless Stove Prices", xlab = "Price($)")
+
+summary(stainless$Price)
+```
+
+###What are the common dimmensions of stoves in relation to what we are looking for?
+
+We are looking for a stove that is no more than 30in.
+
+```{r echo=TRUE}
+hist(stainless$Width, col = "blue", main="Width of Stainless Stoves ", xlab = "Width (in)")
+summary(stainless$Width)
+```
+
+We are looking for a stove that is close to 45 in height.
+```{r echo=TRUE}
+hist(stainless$Height, col = "blue", main="Height of Stainless Stoves ", xlab = "Height (in)")
+summary(stainless$Height)
+```
+
+We are looking for a stove that is close to 25 in depth.
+```{r echo=TRUE}
+hist(stainless$Depth, col = "blue", main="Depth of Stainless Stoves ", xlab = "Depth (in)")
+summary(stainless$Depth)
+```
+
+###What are the tradeoffs between stove dimensions and price? 
+
+The correlation matrix shows a strong correlation between price and weight.
+```{r echo=TRUE}
+library(car)
+scatterplot.matrix(~Price+Depth+Height+Width+Weight , data=stainless, main="Price Correlated with Dimensions of Stove")
+```
+
+Taking a closer look one can see the clear relationship.
+
+```{r echo=TRUE}
+plot(y = stainless$Price, x = stainless$Weight, pch = 19, col = "red",main = "Correlation between Weight and Price", xlab="Weight (lbs)", ylab = "Price ($)")
+
+abline(lm(stainless$Price~stainless$Weight), col="red") # regression line (y~x) 
+```
+
+Regression estimate of relationship between price and weight.
+```{r echo=TRUE}
+summary(lm(Price~Weight, data = stainless))
+```
+
+###What other features are correlated with price?
+
+```{r echo=TRUE}
+scatterplot.matrix(~Price+ MainOvenCapacityCuFt+ NumberofElementsBurners  , data=stainless, main="Price Correlated with Dimensions of Stove - Plot1")
+```
+
+
+```{r echo=TRUE}
+scatterplot.matrix(~Price + MainOvenNumberofRackPositions + NumberofOvenRacks , data=stainless, main="Price Correlated with Dimensions of Stove - Plot2")
+```
+
+Taking a closer look at the correlations betwen Number of Oven Racks and Price we see a negative relationship.
+
+```{r echo=TRUE}
+plot(y = stainless$Price, x = stainless$NumberofOvenRacks, pch = 19, col = "red",main = "Correlation between Number of Oven Racks and Price", xlab="Number of Oven Racks", ylab = "Price ($)")
+
+abline(lm(stainless$Price~stainless$NumberofOvenRacks), col="red") # regression line (y~x) 
+```
+
+Regression estimate of relationship between price and number of oven racks.
+```{r echo=TRUE}
+summary(lm(Price~NumberofOvenRacks, data = stainless))
+```
+
+###How does the effectiveness and efficiency correlate with price?
+
+The scatterplot below shows that the higher the BTUs the lower the price, which seems counterintuitive.
+
+```{r echo=TRUE}
+scatterplot.matrix(~Price + BroilerBurnerBTUs +  MainOvenBakeBurnerBTUs , data=stainless, main="Price Correlated with Effectiveness of Oven")
+```
+
+
+
+##Regression Analysis
+```{r echo=TRUE}
+model <- lm(Price ~ Weight + MainOvenCapacityCuFt + NumberofOvenRacks + BroilerBurnerBTUs +  MainOvenBakeBurnerBTUs , data=stainless )
+```
+
+```{r echo=TRUE}
+summary(model)
+```
+
+```{r echo=TRUE}
+plot(model)
+```
+
+###How good does the regression model fit the data?
+
+```{r echo=TRUE}
+plot(x = predict(model, stainless), y = stainless$Price, main = "Model Predictions vs. Actual Prices", xlab = "Predicted Price", ylab = "Actual Price")
+abline(0, 1)
+```
+
+##The model accuracy is: 
+
+```{r echo=TRUE}
+mean(abs((stainless$Price - predict(model, stainless))/stainless$Price), na.rm=TRUE)
+
+```
+
+###Appendix - Summary Statistics
+
+Summary statistics
+
+```{r echo=TRUE}
+summary(stainless)
+```
+
+
