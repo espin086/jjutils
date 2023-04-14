@@ -1,3 +1,9 @@
+"""
+Example: python3 gpt_write_code.py "extracts keywords and count of keywords from a job description" --output-file="test_autoemail.py"
+
+"""
+
+
 import argparse
 import gpt
 
