@@ -24,29 +24,40 @@ import pandas as pd
 import pandas_datareader.data as web
 import datetime
 
+
 def economic_indicators():
-    indicators = ['AWHMAN', 'IC4WSA','DGORDER', 'ANDENO','PERMIT', 'SP500','M2','UMCSENT']
+    indicators = [
+        "AWHMAN",
+        "IC4WSA",
+        "DGORDER",
+        "ANDENO",
+        "PERMIT",
+        "SP500",
+        "M2",
+        "UMCSENT",
+    ]
     return indicators
+
 
 def get_indicators(series, start_year, end_year):
     start = datetime.datetime(start_year, 1, 1)
     end = datetime.datetime(end_year, 1, 27)
-    data = web.DataReader(series, 'fred', start, end)
+    data = web.DataReader(series, "fred", start, end)
     return data
 
 
+# TODO: understand all of the metrics I am looking at, write a Medium post
+# TODO: create a helper function for taking a pandas dataframe to google cloud storage bucket
+# TODO: create function that stores economic indicators on google cloud storage
+# TODO: create a time-series anomaly detector...
+# TODO: add to cronjob with an email notification
 
-
-#TODO: understand all of the metrics I am looking at, write a Medium post
-#TODO: create a helper function for taking a pandas dataframe to google cloud storage bucket
-#TODO: create function that stores economic indicators on google cloud storage
-#TODO: create a time-series anomaly detector...
-#TODO: add to cronjob with an email notification
 
 def main():
     series = economic_indicators()
     get_indicators(series=series, start_year=1996, end_year=2018)
     return None
+
 
 if __name__ == "__main__":
     main()
