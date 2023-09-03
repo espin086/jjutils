@@ -7,19 +7,19 @@ in gs://jj-projects/itsfridayclean_data; for the raw data
 look in gs://jj-projects/itsfriday/raw_data
 """
 
-import requests
-import bs4
-from bs4 import BeautifulSoup
-import pandas as pd
-import time
-import WazeRouteCalculator
 import datetime
+import glob
 import os
 import sys
-import glob
+import time
 
+import bs4
 import helpers.email_util as email_util
 import helpers.logger
+import pandas as pd
+import requests
+import WazeRouteCalculator
+from bs4 import BeautifulSoup
 
 logger = helpers.logger.set_up_logging()
 

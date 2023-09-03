@@ -9,13 +9,14 @@ If an exception is encountered during the API request, the error will be logged.
 """
 
 
-import requests
-import json
-import os
-import logging
-import pprint
 import argparse
+import json
+import logging
+import os
+import pprint
+
 import aws_secrets_manager
+import requests
 
 logging.basicConfig(level=logging.INFO)
 pp = pprint.PrettyPrinter(indent=4)

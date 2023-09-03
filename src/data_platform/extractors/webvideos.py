@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-import os
-import sys
-
+import glob
 # import email_util
 import json
-import glob
+import os
+import sys
 
 
 def download_playlist(playlists, mydirectory):

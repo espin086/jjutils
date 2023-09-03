@@ -16,9 +16,10 @@
 import os
 import sys
 import tarfile
+
 import numpy
-from six.moves import urllib
 import tensorflow as tf
+from six.moves import urllib
 
 INCEPTION_TF_GRAPH = (
     "http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz"

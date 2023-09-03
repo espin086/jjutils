@@ -1,13 +1,12 @@
-import urllib2
+import os
 import re
-import os
-from os.path import basename
-from urlparse import urlsplit
-from urlparse import urlparse
-from posixpath import basename, dirname
-import os
 import sys
 import time
+from os.path import basename
+from posixpath import basename, dirname
+
+import urllib2
+from urlparse import urlparse, urlsplit
 
 
 def process_url(raw_url):

@@ -20,9 +20,10 @@ The leaing indicators include:
     - (UMCSENT) Index of consumer expectations (UMCSENT')
 
 """
+import datetime
+
 import pandas as pd
 import pandas_datareader.data as web
-import datetime
 
 
 def economic_indicators():

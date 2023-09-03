@@ -8,9 +8,9 @@ TODO: Find out why Zillow Scraper isn't working
 TODO: Create data studio dashboard of listings
 """
 
-from lxml import html
 import requests
 import urllib3
+from lxml import html
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 

@@ -1,9 +1,10 @@
 import io
 import os
+import sys
+
 import pandas as pd
 from google.cloud import vision
 from google.cloud.vision import types
-import sys
 
 client = vision.ImageAnnotatorClient()
 

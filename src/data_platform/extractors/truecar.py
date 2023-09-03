@@ -1,10 +1,11 @@
+import datetime
+import glob
 import os
 import sys
+
 import email_util
-import glob
-import pandas as pd
 import numpy as np
-import datetime
+import pandas as pd
 
 # Running R scraper and saving to Google Cloud
 os.system("/usr/bin/Rscript truecar.R")

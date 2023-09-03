@@ -1,6 +1,7 @@
 import argparse
 import json
 import logging
+
 import WazeRouteCalculator
 
 logging.basicConfig(level=logging.INFO)

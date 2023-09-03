@@ -3,11 +3,11 @@ This module contains a single function, get_text_in_url, which is used to extrac
 """
 
 
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
 import argparse
 import logging
+from urllib.request import urlopen
 
+from bs4 import BeautifulSoup
 
 logging.basicConfig(level=logging.INFO)
 

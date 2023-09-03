@@ -1,12 +1,13 @@
 #!/usr/bin/python
 
 
-import sys  # used to facilitate arguments in terminal
-import requests
-from bs4 import BeautifulSoup
-import wikipedia
-from nltk.corpus import stopwords
 import string
+import sys  # used to facilitate arguments in terminal
+
+import requests
+import wikipedia
+from bs4 import BeautifulSoup
+from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 
 stemmer = PorterStemmer()

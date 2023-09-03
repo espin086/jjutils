@@ -19,12 +19,12 @@ Required Libraries:
 """
 
 
-import os
-import csv
-import re
-import logging
-import json
 import argparse
+import csv
+import json
+import logging
+import os
+import re
 
 import dedupe
 from unidecode import unidecode
