@@ -1,7 +1,8 @@
-import pandas as pd
 import io
-import requests
 import time
+
+import pandas as pd
+import requests
 
 
 def google_stocks(symbol, startdate=(1, 1, 2005), enddate=None):

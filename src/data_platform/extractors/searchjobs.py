@@ -3,14 +3,14 @@ This module uses the LinkedIn Jobs API to search for jobs on LinkedIn by providi
 """
 
 
-import logging
-import requests
-import json
 import argparse
-import pprint
+import json
+import logging
 import os
-import aws_secrets_manager
+import pprint
 
+import aws_secrets_manager
+import requests
 
 pp = pprint.PrettyPrinter(indent=4)
 logging.basicConfig(level=logging.INFO)

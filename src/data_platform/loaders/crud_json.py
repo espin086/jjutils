@@ -22,8 +22,8 @@ file.delete(0)
 """
 
 
-import json
 import argparse
+import json
 
 
 class JSONFileCRUD:
