@@ -1,3 +1,5 @@
 build/
 dist/
 jjutils.egg-info/
+jjutils-venv/
+jjutils/__pycache__/
