@@ -31,3 +31,11 @@ class DataFrameExplorer:
         self.dataframe.plot(kind="box", figsize=(10, 6))
         plt.title("Box Plot")
         plt.show()
+
+    def run(self):
+        print(self.check_head())
+        print(self.check_datatypes())
+        print(self.check_missing_variables())
+        self.make_correlation_plot()
+        self.make_histograms()
+        self.make_box_plots()

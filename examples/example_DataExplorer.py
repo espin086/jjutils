@@ -1,6 +1,10 @@
 from jjutils import config
 from jjutils.FileHandler import FileHandler
+from jjutils.DataExplorer import DataFrameExplorer
 
 file_handler = FileHandler(config.CSV_PATH)
-csv = file_handler.read_csv()
-print(csv)
+df = file_handler.read_csv()
+
+df_explorer = DataFrameExplorer(df)
+
+df_explorer.run()
