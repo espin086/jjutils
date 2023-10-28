@@ -1,6 +1,15 @@
+import pandas
+
+
 class FileHandler:
     def __init__(self, file_path):
         self.file_path = file_path
+
+    def read_csv(self, sep=","):
+        try:
+            return pandas.read_csv(self.file_path, sep=sep)
+        except FileNotFoundError:
+            return None
 
     def read_file(self):
         try:

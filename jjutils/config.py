@@ -8,6 +8,7 @@ LOGGING_LEVEL = logging.info
 
 # == Data Configs ==
 CWD_PATH = Path(os.getcwd())
+CSV_PATH = CWD_PATH / "data" / "train.csv"
 
 # == Database Configs ==
 DATABASE_PATH = CWD_PATH / "data" / "database.db"
