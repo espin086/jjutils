@@ -4,7 +4,7 @@ class FileHandler:
 
     def read_file(self):
         try:
-            with open(self.file_path, 'r') as file:
+            with open(self.file_path, "r") as file:
                 content = file.read()
             return content
         except FileNotFoundError:
@@ -12,7 +12,7 @@ class FileHandler:
 
     def write_file(self, content):
         try:
-            with open(self.file_path, 'w') as file:
+            with open(self.file_path, "w") as file:
                 file.write(content)
             return True
         except Exception as e:
@@ -21,7 +21,7 @@ class FileHandler:
 
     def append_to_file(self, content):
         try:
-            with open(self.file_path, 'a') as file:
+            with open(self.file_path, "a") as file:
                 file.write(content)
             return True
         except Exception as e:
@@ -31,6 +31,7 @@ class FileHandler:
     def delete_file(self):
         try:
             import os
+
             os.remove(self.file_path)
             return True
         except FileNotFoundError:
