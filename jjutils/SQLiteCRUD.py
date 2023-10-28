@@ -1,4 +1,6 @@
 import sqlite3
+import uuid
+
 
 class SQLiteCRUD:
     def __init__(self, db_name):
@@ -17,8 +19,10 @@ class SQLiteCRUD:
         try:
             if self.connection:
                 cursor = self.connection.cursor()
-                column_str = ', '.join(columns)
-                create_table_query = f"CREATE TABLE IF NOT EXISTS {table_name} ({column_str})"
+                column_str = ", ".join(columns)
+                create_table_query = (
+                    f"CREATE TABLE IF NOT EXISTS {table_name} ({column_str})"
+                )
                 cursor.execute(create_table_query)
                 self.connection.commit()
                 return True
@@ -30,11 +34,14 @@ class SQLiteCRUD:
             return False
 
     def insert_data(self, table_name, data):
+        uuid_str = str(uuid.uuid4().int)
         try:
             if self.connection:
                 cursor = self.connection.cursor()
-                placeholders = ', '.join(['?'] * len(data))
-                insert_query = f"INSERT INTO {table_name} VALUES ({placeholders})"
+                placeholders = ", ".join(["?"] * (len(data)))
+                insert_query = (
+                    f"INSERT INTO {table_name} VALUES ({uuid_str}, {placeholders})"
+                )
                 cursor.execute(insert_query, data)
                 self.connection.commit()
                 return True
@@ -66,7 +73,7 @@ class SQLiteCRUD:
         try:
             if self.connection:
                 cursor = self.connection.cursor()
-                set_values = ', '.join([f"{key} = ?" for key in data.keys()])
+                set_values = ", ".join([f"{key} = ?" for key in data.keys()])
                 update_query = f"UPDATE {table_name} SET {set_values} WHERE {condition}"
                 cursor.execute(update_query, list(data.values()))
                 self.connection.commit()
@@ -96,3 +103,6 @@ class SQLiteCRUD:
     def close(self):
         if self.connection:
             self.connection.close()
+
+
+# example of inserting data into the database
