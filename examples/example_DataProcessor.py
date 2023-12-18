@@ -5,6 +5,7 @@ from jjutils.DataProcessor import DataFrameCleaner
 
 
 def update_data_types(df):
+    """Updates the data types of the dataframe."""
     # checking and cleaning the dataframe
     explorer = DataFrameExplorer(df)
     data_cleaner = DataFrameCleaner(df)
