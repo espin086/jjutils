@@ -10,14 +10,16 @@ class KMeansClustering:
     """Class for performing K-Means Clustering on a dataset."""
 
     def __init__(self, data):
-        self.data = data
+        self.data = data.values
+        self.data_numeric = None
         self.scaled_data = None
         self.cluster_labels = None
 
     def scale_data(self):
         """Scales the data using StandardScaler."""
         scaler = StandardScaler()
-        self.scaled_data = scaler.fit_transform(self.data)
+        self.data_numeric = self.data.select_dtypes(include=["int", "float", "bool"])
+        self.scaled_data = scaler.fit_transform(self.data_numeric)
 
     def elbow_plot(self, max_clusters):
         """Plots the Elbow Plot for the data using multithreading."""
@@ -47,3 +49,4 @@ class KMeansClustering:
         kmeans.fit(self.scaled_data)
         self.cluster_labels = kmeans.labels_
         self.data["Cluster"] = self.cluster_labels
+        return self.data

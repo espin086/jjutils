@@ -2,16 +2,20 @@ import pandas
 
 
 class FileHandler:
+    """Class to handle files."""
+
     def __init__(self, file_path):
         self.file_path = file_path
 
     def read_csv(self, sep=","):
+        """Reads a CSV file and returns a dataframe."""
         try:
             return pandas.read_csv(self.file_path, sep=sep)
         except FileNotFoundError:
             return None
 
     def read_file(self):
+        """Reads a file and returns the content."""
         try:
             with open(self.file_path, "r") as file:
                 content = file.read()
@@ -20,6 +24,7 @@ class FileHandler:
             return None
 
     def write_file(self, content):
+        """Writes content to a file."""
         try:
             with open(self.file_path, "w") as file:
                 file.write(content)
@@ -29,6 +34,7 @@ class FileHandler:
             return False
 
     def append_to_file(self, content):
+        """Appends content to a file."""
         try:
             with open(self.file_path, "a") as file:
                 file.write(content)
