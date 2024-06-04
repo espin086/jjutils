@@ -18,7 +18,6 @@ class KMeansClustering:
     def scale_data(self):
         """Scales the data using StandardScaler."""
         scaler = StandardScaler()
-        self.data_numeric = self.data.select_dtypes(include=["int", "float", "bool"])
         self.scaled_data = scaler.fit_transform(self.data_numeric)
 
     def elbow_plot(self, max_clusters):
