@@ -1,11 +1,16 @@
 import pandas as pd
+import os
 
 
 class CSVHandler:
-    def __init__(self, file_path, delimiter="|"):
+    def __init__(self, file_path, delimiter=","):
         self.file_path = file_path
         self.delimiter = delimiter
         self.dataframe = None
+
+        # Check if file exists, if not create it
+        if not os.path.isfile(self.file_path):
+            open(self.file_path, "w").close()
 
     def read_csv(self):
         """
@@ -71,3 +76,53 @@ class CSVHandler:
         :return: DataFrame containing the CSV data.
         """
         return self.dataframe
+
+
+def main():
+    # Create a DataFrame
+    data = {
+        "Name": ["John", "Anna", "Peter", "Linda"],
+        "Age": [28, 24, 35, 32],
+        "City": ["New York", "Paris", "Berlin", "London"],
+    }
+    df = pd.DataFrame(data)
+
+    # Create a CSVHandler for a new CSV file
+    csv_handler = CSVHandler("data/train.csv")
+
+    # Save the DataFrame to the CSV file
+    csv_handler.save_csv(df)
+
+    # Read the CSV file
+    df_read = csv_handler.read_csv()
+    print(df_read)
+
+    # Append data to the CSV file
+    append_data = {
+        "Name": ["Tom", "Jerry"],
+        "Age": [30, 25],
+        "City": ["Tokyo", "Delhi"],
+    }
+    df_append = pd.DataFrame(append_data)
+    csv_handler.append_csv(df_append)
+
+    # Read the updated CSV file
+    df_updated = csv_handler.read_csv()
+    print(df_updated)
+
+    # Update the CSV file with new data
+    update_data = {
+        "Name": ["Alice", "Bob"],
+        "Age": [27, 33],
+        "City": ["Sydney", "Toronto"],
+    }
+    df_update = pd.DataFrame(update_data)
+    csv_handler.update_csv(df_update)
+
+    # Read the updated CSV file
+    df_updated = csv_handler.read_csv()
+    print(df_updated)
+
+
+if __name__ == "__main__":
+    main()
