@@ -1,5 +1,4 @@
 import sqlite3
-import uuid
 
 
 class SQLiteCRUD:
@@ -34,15 +33,12 @@ class SQLiteCRUD:
             return False
 
     def insert_data(self, table_name, data):
-        uuid_str = str(uuid.uuid4().int)
         try:
             if self.connection:
                 cursor = self.connection.cursor()
-                placeholders = ", ".join(["?"] * (len(data)))
-                insert_query = (
-                    f"INSERT INTO {table_name} VALUES ({uuid_str}, {placeholders})"
-                )
-                cursor.execute(insert_query, data)
+                placeholders = ", ".join(["?"] * len(data))  # removed +1 for the uuid
+                insert_query = f"INSERT INTO {table_name} VALUES ({placeholders})"
+                cursor.execute(insert_query, data)  # removed uuid from data
                 self.connection.commit()
                 return True
             else:
@@ -105,4 +101,39 @@ class SQLiteCRUD:
             self.connection.close()
 
 
-# example of inserting data into the database
+def main():
+    # Create an instance of SQLiteCRUD with a database name
+    db = SQLiteCRUD("test.db")
+
+    # Connect to the database
+    if not db.connect():
+        return
+
+    # Define table name and columns
+    table_name = "employees"
+    columns = ["id TEXT PRIMARY KEY", "name TEXT", "age INTEGER", "department TEXT"]
+
+    # Create a table
+    if not db.create_table(table_name, columns):
+        return
+
+    # Define data to be inserted
+    data = ("8", "John Doe", 30, "HR")
+
+    # Insert data into the table
+    if not db.insert_data(table_name, data):
+        return
+
+    # Query the data
+    results = db.select_data(table_name)
+
+    # Print the results
+    for row in results:
+        print(row)
+
+    # Close the database connection
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
