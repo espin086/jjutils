@@ -3,4 +3,5 @@ pandas==1.5.3
 seaborn==0.13.0
 scikit-learn
 statsmodels==0.12.2
+openpyxl==3.0.7
 

@@ -1,10 +1,13 @@
 import pandas as pd
+import logging
+import argparse
 
 
 class ExcelHandler:
     def __init__(self, file_path):
         self.file_path = file_path
         self.dataframes = {}
+        self.logger = logging.getLogger(__name__)
 
     def read_sheet(self, sheet_name):
         """
@@ -16,9 +19,10 @@ class ExcelHandler:
         try:
             df = pd.read_excel(self.file_path, sheet_name=sheet_name)
             self.dataframes[sheet_name] = df
+            self.logger.info(f"Read sheet '{sheet_name}' successfully.")
             return df
         except Exception as e:
-            print(f"Error reading sheet {sheet_name}: {e}")
+            self.logger.error(f"Error reading sheet {sheet_name}: {e}")
 
     def read_all_sheets(self):
         """
@@ -30,9 +34,10 @@ class ExcelHandler:
             xls = pd.ExcelFile(self.file_path)
             for sheet_name in xls.sheet_names:
                 self.dataframes[sheet_name] = pd.read_excel(xls, sheet_name=sheet_name)
+            self.logger.info("Read all sheets successfully.")
             return self.dataframes
         except Exception as e:
-            print(f"Error reading all sheets: {e}")
+            self.logger.error(f"Error reading all sheets: {e}")
 
     def save_sheet(self, df, sheet_name):
         """
@@ -47,8 +52,9 @@ class ExcelHandler:
             ) as writer:
                 df.to_excel(writer, sheet_name=sheet_name, index=False)
             self.dataframes[sheet_name] = df
+            self.logger.info(f"Saved sheet '{sheet_name}' successfully.")
         except Exception as e:
-            print(f"Error saving sheet {sheet_name}: {e}")
+            self.logger.error(f"Error saving sheet {sheet_name}: {e}")
 
     def save_all_sheets(self):
         """
@@ -58,8 +64,9 @@ class ExcelHandler:
             with pd.ExcelWriter(self.file_path, engine="openpyxl") as writer:
                 for sheet_name, df in self.dataframes.items():
                     df.to_excel(writer, sheet_name=sheet_name, index=False)
+            self.logger.info("Saved all sheets successfully.")
         except Exception as e:
-            print(f"Error saving all sheets: {e}")
+            self.logger.error(f"Error saving all sheets: {e}")
 
     def get_dataframe(self, sheet_name):
         """
@@ -78,7 +85,41 @@ class ExcelHandler:
         """
         try:
             xls = pd.ExcelFile(self.file_path)
+            self.logger.info("Listed all sheets successfully.")
             return xls.sheet_names
         except Exception as e:
-            print(f"Error listing sheets: {e}")
+            self.logger.error(f"Error listing sheets: {e}")
             return []
+
+
+def main(file_path):
+    # Initialize logging
+    logging.basicConfig(level=logging.INFO)
+
+    # Instantiate ExcelHandler
+    excel_handler = ExcelHandler(file_path)
+
+    # Read all sheets
+    sheets = excel_handler.read_all_sheets()
+    print("Sheets:", sheets)
+
+    # List all sheets
+    sheet_names = excel_handler.list_sheets()
+    print("Sheet Names:", sheet_names)
+
+    # Save all sheets
+    for sheet_name, df in sheets.items():
+        excel_handler.save_sheet(df, sheet_name)
+    excel_handler.save_all_sheets()
+
+
+if __name__ == "__main__":
+    # Set up command-line argument parser
+    parser = argparse.ArgumentParser(description="Excel Handler")
+    parser.add_argument("file_path", type=str, help="Path to the Excel file")
+
+    # Parse command-line arguments
+    args = parser.parse_args()
+
+    # Call main function with the provided file path
+    main(args.file_path)
