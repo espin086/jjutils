@@ -1,5 +1,5 @@
 build:
-	rm -r build dist &  python3 -m build --sdist --wheel ./
+	python3 -m build --sdist --wheel ./
 
 test:
 	pytest
@@ -7,5 +7,5 @@ test:
 deploy:
 	twine upload dist/*
 
-install:
-	pip install jjutils
+clean:
+	rm -r build dist
