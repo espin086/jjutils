@@ -5,6 +5,7 @@ Module for BigQuery CRUD operations.
 from google.cloud import bigquery
 import logging
 
+
 class BigQueryHandler:
     """
     A class to handle BigQuery operations, including CRUD.
@@ -80,7 +81,9 @@ class BigQueryHandler:
             else:
                 logging.error("Errors occurred while inserting rows: %s", errors)
         except Exception as e:
-            logging.error("Error inserting data into table %s.%s: %s", dataset_name, table_name, e)
+            logging.error(
+                "Error inserting data into table %s.%s: %s", dataset_name, table_name, e
+            )
 
     def update_data(self, query: str):
         """

@@ -1,12 +1,23 @@
 import pandas as pd
+import logging
 import os
 
 
 class CSVHandler:
+    """Class to handle CSV files."""
+
     def __init__(self, file_path, delimiter=","):
+        """
+        Initialize the CSVHandler.
+
+        Args:
+            file_path (str): Path to the CSV file.
+            delimiter (str): Delimiter used in the CSV file.
+        """
         self.file_path = file_path
         self.delimiter = delimiter
         self.dataframe = None
+        self.logger = logging.getLogger(__name__)
 
         # Check if file exists, if not create it
         if not os.path.isfile(self.file_path):
@@ -16,33 +27,41 @@ class CSVHandler:
         """
         Read the CSV file with the specified delimiter.
 
-        :return: DataFrame containing the CSV data.
+        Returns:
+            DataFrame: DataFrame containing the CSV data.
         """
         try:
             self.dataframe = pd.read_csv(self.file_path, delimiter=self.delimiter)
+            self.logger.info(f"Successfully read CSV file: {self.file_path}")
             return self.dataframe
         except Exception as e:
-            print(f"Error reading CSV file: {e}")
+            self.logger.error(f"Error reading CSV file: {e}")
+            return None
 
     def save_csv(self, df, index=False):
         """
         Save a DataFrame to the CSV file with the specified delimiter.
 
-        :param df: DataFrame to save.
-        :param index: Boolean flag to include index in CSV. Default is False.
+        Args:
+            df (DataFrame): DataFrame to save.
+            index (bool): Boolean flag to include index in CSV. Default is False.
         """
         try:
             df.to_csv(self.file_path, delimiter=self.delimiter, index=index)
             self.dataframe = df
+            self.logger.info(
+                f"Successfully saved DataFrame to CSV file: {self.file_path}"
+            )
         except Exception as e:
-            print(f"Error saving CSV file: {e}")
+            self.logger.error(f"Error saving CSV file: {e}")
 
     def append_csv(self, df, index=False):
         """
         Append a DataFrame to the existing CSV file with the specified delimiter.
 
-        :param df: DataFrame to append.
-        :param index: Boolean flag to include index in CSV. Default is False.
+        Args:
+            df (DataFrame): DataFrame to append.
+            index (bool): Boolean flag to include index in CSV. Default is False.
         """
         try:
             df.to_csv(
@@ -56,15 +75,19 @@ class CSVHandler:
                 self.dataframe = pd.concat([self.dataframe, df], ignore_index=True)
             else:
                 self.dataframe = df
+            self.logger.info(
+                f"Successfully appended data to CSV file: {self.file_path}"
+            )
         except Exception as e:
-            print(f"Error appending to CSV file: {e}")
+            self.logger.error(f"Error appending to CSV file: {e}")
 
     def update_csv(self, df, index=False):
         """
         Update the CSV file with a new DataFrame, overwriting existing content.
 
-        :param df: DataFrame to save.
-        :param index: Boolean flag to include index in CSV. Default is False.
+        Args:
+            df (DataFrame): DataFrame to save.
+            index (bool): Boolean flag to include index in CSV. Default is False.
         """
         self.save_csv(df, index=index)
         self.dataframe = df
@@ -73,12 +96,18 @@ class CSVHandler:
         """
         Get the DataFrame of the CSV data.
 
-        :return: DataFrame containing the CSV data.
+        Returns:
+            DataFrame: DataFrame containing the CSV data.
         """
         return self.dataframe
 
 
 def main():
+    # Initialize logging
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
+
     # Create a DataFrame
     data = {
         "Name": ["John", "Anna", "Peter", "Linda"],
