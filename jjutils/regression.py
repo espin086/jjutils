@@ -31,6 +31,7 @@ class RegressionAnalysis:
             return self.results
         except Exception as e:
             print(f"Error fitting model: {e}")
+            return None
 
     def summary(self):
         """
@@ -46,8 +47,9 @@ class RegressionAnalysis:
         Plot regression diagnostics.
         """
         if self.results:
-            sm.graphics.plot_regress_exog(self.results, self.formula.split("~")[1].strip())
-            plt.show()
+            for predictor in [name for name in self.model.exog_names if name != "Intercept"]:
+                sm.graphics.plot_regress_exog(self.results, predictor)
+                plt.show()
         else:
             print("Model has not been fitted yet.")
 
@@ -57,7 +59,7 @@ class RegressionAnalysis:
 
         :return: DataFrame containing VIF values.
         """
-        if self.model:
+        if self.results:
             X = self.model.exog
             vif_data = pd.DataFrame()
             vif_data["variable"] = self.model.exog_names
@@ -188,6 +190,7 @@ class RegressionAnalysis:
                 return predictions
             except Exception as e:
                 print(f"Error making predictions: {e}")
+                return None
         else:
             print("Model has not been fitted yet.")
             return None
